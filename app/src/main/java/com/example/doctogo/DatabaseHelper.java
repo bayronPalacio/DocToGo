@@ -225,7 +225,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     //login user function: find matching username + password.
     public Cursor loginUser(String user, String pass) {
         SQLiteDatabase db = this.getWritableDatabase();
-        String query = "SELECT "+T1COL_1+", "+T1COL_4+", "+T1COL_17 +" FROM "+TABLE1_NAME+
+        String query = "SELECT "+T1COL_1+", "+T1COL_4+", "+T1COL_17 +", "+T1COL_14 +" FROM "+TABLE1_NAME+
                 " WHERE "+T1COL_2+"=?  AND "+T1COL_3+"= ? ";
         return db.rawQuery(query,new String[]{user,pass});
     }
@@ -371,6 +371,33 @@ class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    //Update first login Patient Information
+    public boolean updateFirstLoginUser(int accID, String accPass, String accFirstName, String accLastName, String accAddress, String accCity, String accPhone, int accWeight,  String accGender, int accAge, int accMSP) {
+        try {
+            accCity = (accCity.trim().toLowerCase()).substring(0, 1).toUpperCase() + (accCity.trim().toLowerCase()).substring(1);
+            SQLiteDatabase db = this.getWritableDatabase();
+            //update into db
+            ContentValues cv = new ContentValues();
+            cv.put(T1COL_3, accPass.trim());
+            cv.put(T1COL_5, accFirstName.trim());
+            cv.put(T1COL_6, accLastName.trim());
+            cv.put(T1COL_7, accAddress.trim());
+            cv.put(T1COL_9, accPhone.trim());
+            cv.put(T1COL_11, accWeight);
+            cv.put(T1COL_12, accGender);
+            cv.put(T1COL_13, accAge);
+            cv.put(T1COL_15, accCity);
+            cv.put(T1COL_16, accMSP);
+            cv.put(T1COL_14,0);
+            int reply = db.update(TABLE1_NAME, cv, T1COL_1 + "=" + accID, null);
+
+            //return results
+            return reply > 0;
+        } catch (Exception msg) {
+            Log.e("DbfirstlogupdInfoUser ", msg.getMessage());
+            return false;
+        }
+    }
     //Update Patient Information
 //    public Cursor updateInformationUser(int userId,String address,String email,String phone,int weight){
     public Cursor updateInformationUser(int userId, String address, String city, String email, String phone, int weight, int msp) {

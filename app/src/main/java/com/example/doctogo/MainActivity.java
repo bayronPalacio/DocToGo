@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                startActivity(new Intent(MainActivity.this, register.class));
+                Intent i = new Intent(MainActivity.this, register.class);
+                i.putExtra("register", 0);
+                startActivity(i);
             }
         });
 
@@ -81,7 +83,15 @@ public class MainActivity extends AppCompatActivity {
                             startActivity(new Intent(MainActivity.this, admin_main.class));
                             break;
                         case 2:
-                            startActivity(new Intent(MainActivity.this, patient_main.class));
+                            if(user.getInt(3)==1)
+                            {
+                                Intent i = new Intent(MainActivity.this, register.class);
+                                i.putExtra("register", 1);
+                                startActivity(i);
+                            }
+                            else {
+                                startActivity(new Intent(MainActivity.this, patient_main.class));
+                            }
                             break;
                         case 3:
                             startActivity(new Intent(MainActivity.this, doctor_main.class));

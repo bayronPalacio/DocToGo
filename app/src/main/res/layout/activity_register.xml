@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/colorBackgroundActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".MainActivity"
@@ -45,6 +44,16 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_RegisterPassword" />
 
         <Spinner
+            android:id="@+id/spn_RegisterRoleFirstlogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:entries="@array/Roles"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_RegisterPassword" />
+
+        <Spinner
             android:id="@+id/spn_RegisterGender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -57,12 +66,13 @@
             android:id="@+id/txt_RegisterFirstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="@string/txt_FirstName"
             android:importantForAutofill="no"
+            android:inputType="textPersonName"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/spn_RegisterRole" />
+            app:layout_constraintTop_toBottomOf="@id/txt_RegisterPassword" />
 
         <EditText
             android:id="@+id/txt_RegisterLastname"
