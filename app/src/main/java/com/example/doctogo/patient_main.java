@@ -87,6 +87,7 @@ public class patient_main extends AppCompatActivity {
             while (c.moveToNext()) {
                 i++;
                 sentenceForReminder += i + ". Due Date: " + c.getString(1) + "\n";
+                dbh.setReminder(c.getInt(0),0);
             }
             AlertDialog.Builder reminder = new AlertDialog.Builder(this);
             if (i == 1) {
