@@ -143,7 +143,7 @@ public class register extends AppCompatActivity
                         return;
                 }
 
-
+                dbh = new DatabaseHelper(getBaseContext());
                 String gender = SPGender.getSelectedItem().toString();
                 boolean success;
                 if(register == 1){
