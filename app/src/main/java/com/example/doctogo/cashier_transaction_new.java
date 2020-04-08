@@ -70,14 +70,14 @@ public class cashier_transaction_new extends AppCompatActivity implements DatePi
                 while(u.moveToNext()){
                     String patientName = u.getString(4) + " " + u.getString(5);
                     String address = u.getString(6) + ", " + u.getString(14);
-                    int MSP = u.getInt(15);
+                    String MSP = u.getString(15);
                     patientTxt.setText(patientName);
                     addressTxt.setText(address);
-                    if(MSP == 0) {
+                    if(MSP == "" ||MSP.isEmpty() ) {
                         MSPTxt.setText("n/a");
                     }
                     else{
-                        MSPTxt.setText(Integer.toString(MSP));
+                        MSPTxt.setText(MSP);
                     }
                 }
             }

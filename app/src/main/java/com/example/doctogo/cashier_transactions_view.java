@@ -73,12 +73,12 @@ public class cashier_transactions_view extends AppCompatActivity implements Date
                     while(u.moveToNext()){
                         String patientName = u.getString(4) + " " + u.getString(5);
                         patientTxt.setText(patientName);
-                        int msp = u.getInt(15);
-                        if(msp == 0 ){
+                        String msp = u.getString(15);
+                        if(msp == ""||msp.isEmpty()){
                             mspTxt.setText("n/a");
                         }
                         else {
-                            mspTxt.setText(Integer.toString(msp));
+                            mspTxt.setText(msp);
                         }
                     }
                 }

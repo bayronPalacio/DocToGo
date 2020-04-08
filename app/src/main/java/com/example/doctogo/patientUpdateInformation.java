@@ -15,10 +15,10 @@ import android.widget.EditText;
 
 public class patientUpdateInformation extends AppCompatActivity {
 
-    private final DatabaseHelper db = new DatabaseHelper(this);
+    private DatabaseHelper db;
     private patientInformationFragment updateFragment;
     private FragmentManager manager;
-    private int msp;
+    private int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +39,8 @@ public class patientUpdateInformation extends AppCompatActivity {
         Button btnUpdateInfo = findViewById(R.id.btnClickUpdateInfo);
 
         SharedPreferences storage = getApplicationContext().getSharedPreferences("DOCTOGOSESSION", Context.MODE_PRIVATE);
-        final int userID = storage.getInt("USERID",0);
-
+        userID = storage.getInt("USERID",0);
+        db = new DatabaseHelper(this);
         Cursor getInformation = db.getInformationUser(userID);
         try{
 
@@ -51,7 +51,8 @@ public class patientUpdateInformation extends AppCompatActivity {
                 updateCity.setText(getInformation.getString(14));
                 updatePhone.setText(getInformation.getString(8));
                 updateWeight.setText(getInformation.getString(10));
-                if(getInformation.getInt(15) == 0){
+                String x = getInformation.getString(15);
+                if(getInformation.getString(15) == ""||getInformation.getString(15).isEmpty()){
                     updateMSP.setText("");
                 }else {
                     updateMSP.setText(getInformation.getString(15));
@@ -66,27 +67,12 @@ public class patientUpdateInformation extends AppCompatActivity {
             public void onClick(View v) {
                 //Query to update information
 
-                if((updateMSP.getText().toString()).isEmpty()){
-                    msp = 0;
-                }
-                else{
-                    msp = Integer.parseInt(updateMSP.getText().toString());
-                }
-                Cursor updateInformation = db.updateInformationUser(userID,updateAddress.getText().toString(),updateCity.getText().toString(),updateEmail.getText().toString(),
+                String msp = updateMSP.getText().toString();
+                db = new DatabaseHelper(getBaseContext());
+                db.updateInformationUser(userID, updateAddress.getText().toString(),updateCity.getText().toString(),updateEmail.getText().toString(),
                         updatePhone.getText().toString(),Integer.parseInt(updateWeight.getText().toString()),msp);
 
                 try{
-                    if(updateInformation.getCount() == 1){
-                        updateInformation.moveToNext();
-                        updateAddress.setText(updateInformation.getString(6));
-                        updateEmail.setText(updateInformation.getString(7));
-                        updateCity.setText(updateInformation.getString(14));
-                        updatePhone.setText(updateInformation.getString(8));
-                        updateWeight.setText(updateInformation.getString(10));
-                        updateMSP.setText(updateInformation.getString(15));
-
-                    }
-
                     patientInformationFragment oldFragment = (patientInformationFragment) manager.findFragmentById(R.id.fragment);
                         if(oldFragment != null){
                             FragmentTransaction trans = manager.beginTransaction();

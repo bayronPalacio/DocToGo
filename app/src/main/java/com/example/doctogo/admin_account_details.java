@@ -100,15 +100,11 @@ public class admin_account_details extends AppCompatActivity
                 String weight = accWeight.getText().toString();
                 String qualifications = accQualifications.getText().toString();
                 String MSP = accMSP.getText().toString();
-                int mspNumber;
                 if(MSP.isEmpty()){
-                    mspNumber = 0;
-                }
-                else{
-                    mspNumber = Integer.parseInt(MSP);
+                    MSP = "";
                 }
                 //send info to db
-                boolean success = dbh.adminUpdate(targetID,username,password,email,firstname,lastname,address,city,phone,Integer.parseInt(weight),qualifications,gender,Integer.parseInt(age),mspNumber);
+                boolean success = dbh.adminUpdate(targetID,username,password,email,firstname,lastname,address,city,phone,Integer.parseInt(weight),qualifications,gender,Integer.parseInt(age),MSP);
 
                 //success/fail messages
                 if(success)
@@ -219,11 +215,8 @@ public class admin_account_details extends AppCompatActivity
             accPhone.setText(data.getString(8));
             accQualifications.setText(data.getString(9));
             accWeight.setText( String.valueOf(data.getInt(10)));
-            if(data.getInt(15) == 0){
-                accMSP.setText("");
-            }else {
-                accMSP.setText(data.getString(15));
-            }
+            accMSP.setText(data.getString(15));
+
             if(data.getString(11) != null)
             {
                 switch (data.getString(11)) {

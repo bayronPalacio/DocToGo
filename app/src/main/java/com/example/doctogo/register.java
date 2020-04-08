@@ -122,9 +122,6 @@ public class register extends AppCompatActivity
                 int age = 0;
                 if(!strAge.isEmpty())
                 {age = Integer.parseInt(strAge);}
-                int msp = 0;
-                if(!strMSP.isEmpty())
-                {msp = Integer.parseInt(strMSP);}
                 int role;
 
                 switch (SPRole.getSelectedItem().toString())
@@ -148,13 +145,13 @@ public class register extends AppCompatActivity
 
 
                 String gender = SPGender.getSelectedItem().toString();
-                boolean success = false;
+                boolean success;
                 if(register == 1){
-                    success = dbh.updateFirstLoginUser(userID,password, firstname, lastname,address, city, phone, weight, gender, age, msp);
+                    success = dbh.updateFirstLoginUser(userID,password, firstname, lastname,address, city, phone, weight, gender, age, strMSP);
                 }
                 else {
                     //make database insert operation
-                    success = dbh.normalRegister(username, password, role, email, firstname, lastname, address, city, phone, weight, gender, age, msp);
+                    success = dbh.normalRegister(username, password, role, email, firstname, lastname, address, city, phone, weight, gender, age, strMSP);
                 }
                 //return to main login
                 if(success)

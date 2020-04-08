@@ -42,7 +42,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     private final static String T1COL_13 = "Age";            //INTEGER     //Age of 0 MUST become "N/A"
     private final static String T1COL_14 = "FirstLogin";     //INTEGER     //flag, turn to 1 if admin register->have to modify self.
     private final static String T1COL_15 = "City";           //TEXT
-    private final static String T1COL_16 = "MSP";            //INTEGER
+    private final static String T1COL_16 = "MSP";            //TEXT
     private final static String T1COL_17 = "Deactivated";    //INTEGER     //flag, 0 => active, 1 => deactivated
 
     /*
@@ -142,7 +142,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
                 T1COL_13+" INTEGER, " +
                 T1COL_14+" INTEGER, " +
                 T1COL_15+" TEXT, " +
-                T1COL_16+" INTEGER, " +
+                T1COL_16+" TEXT, " +
                 T1COL_17 +" INTEGER DEFAULT 0)";
         db.execSQL(query);
 
@@ -251,7 +251,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean normalRegister(String accName, String accPass, int accRole, String accEmail, String accFirstName, String accLastName, String accAddress, String accCity, String accPhone, int accWeight, String accGender, int accAge, int accMSP) {
+    public boolean normalRegister(String accName, String accPass, int accRole, String accEmail, String accFirstName, String accLastName, String accAddress, String accCity, String accPhone, int accWeight, String accGender, int accAge, String accMSP) {
     //public boolean normalRegister(String accName, String accPass,  String accEmail, String accFirstName, String accLastName, String accAddress, String accCity, String accPhone, int accWeight, String accGender, int accAge, int accMSP) {
         accCity = (accCity.trim().toLowerCase()).substring(0, 1).toUpperCase() + (accCity.trim().toLowerCase()).substring(1);
         SQLiteDatabase db = this.getWritableDatabase();
@@ -304,7 +304,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //update an account from admin perspective
-    public boolean adminUpdate(int accID, String accName, String accPass, String accEmail, String accFirstName, String accLastName, String accAddress, String accCity, String accPhone, int accWeight, String accQualifications, String accGender, int accAge, int accMSP) {
+    public boolean adminUpdate(int accID, String accName, String accPass, String accEmail, String accFirstName, String accLastName, String accAddress, String accCity, String accPhone, int accWeight, String accQualifications, String accGender, int accAge, String accMSP) {
         try {
             accCity = (accCity.trim().toLowerCase()).substring(0, 1).toUpperCase() + (accCity.trim().toLowerCase()).substring(1);
             SQLiteDatabase db = this.getWritableDatabase();
@@ -372,7 +372,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //Update first login Patient Information
-    public boolean updateFirstLoginUser(int accID, String accPass, String accFirstName, String accLastName, String accAddress, String accCity, String accPhone, int accWeight,  String accGender, int accAge, int accMSP) {
+    public boolean updateFirstLoginUser(int accID, String accPass, String accFirstName, String accLastName, String accAddress, String accCity, String accPhone, int accWeight,  String accGender, int accAge, String accMSP) {
         try {
             accCity = (accCity.trim().toLowerCase()).substring(0, 1).toUpperCase() + (accCity.trim().toLowerCase()).substring(1);
             SQLiteDatabase db = this.getWritableDatabase();
@@ -399,18 +399,25 @@ class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
     //Update Patient Information
-//    public Cursor updateInformationUser(int userId,String address,String email,String phone,int weight){
-    public Cursor updateInformationUser(int userId, String address, String city, String email, String phone, int weight, int msp) {
+    public boolean updateInformationUser(int userId, String address, String city, String email, String phone, int weight, String msp) {
         try {
             city = (city.trim().toLowerCase()).substring(0, 1).toUpperCase() + (city.trim().toLowerCase()).substring(1);
             SQLiteDatabase db = this.getWritableDatabase();
-            String query = "UPDATE " + TABLE1_NAME + " SET " + T1COL_7 + "=" + "'" + address.trim() + "'," + T1COL_8 + "=" + "'" + email.trim() + "',"
-                    + T1COL_9 + "=" + "'" + phone.trim() + "'," + T1COL_11 + "=" + "'" + weight + "'," + T1COL_16 + "=" + "'" + msp + "'," + T1COL_15 + "=" + "'" + city + "'" + " WHERE " + T1COL_1 + "=" + userId;
-            Log.d("DbupdInfoUser ", query);
-            return db.rawQuery(query, null);
+            ContentValues cv = new ContentValues();
+            cv.put(T1COL_7, address.trim());
+            cv.put(T1COL_9, city.trim());
+            cv.put(T1COL_8, email);
+            cv.put(T1COL_9, phone);
+            cv.put(T1COL_11, weight);
+            cv.put(T1COL_16, msp);
+            cv.put(T1COL_14,0);
+            int reply = db.update(TABLE1_NAME, cv, T1COL_1 + "=" + userId, null);
+
+            //return results
+            return reply > 0;
         } catch (Exception msg) {
             Log.e("DbupdInfoUser ", msg.getMessage());
-            return null;
+            return false;
         }
     }
 

@@ -87,16 +87,15 @@ public class patient_main extends AppCompatActivity {
             while (c.moveToNext()) {
                 i++;
                 sentenceForReminder += i + ". Due Date: " + c.getString(1) + "\n";
-                dbh.setReminder(c.getInt(0),0);
-                AlertDialog.Builder reminder = new AlertDialog.Builder(this);
-                if (i == 1) {
-                    reminder.setTitle("You have total " + i + " reminder\n");
-                } else {
-                    reminder.setTitle("You have total " + i + " reminders\n");
-                }
-                reminder.setMessage(sentenceForReminder);
-                reminder.create().show();
             }
+            AlertDialog.Builder reminder = new AlertDialog.Builder(this);
+            if (i == 1) {
+                reminder.setTitle("You have total " + i + " reminder\n");
+            } else {
+                reminder.setTitle("You have total " + i + " reminders\n");
+            }
+            reminder.setMessage(sentenceForReminder);
+            reminder.create().show();
         }
     }
 

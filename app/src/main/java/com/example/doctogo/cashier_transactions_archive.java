@@ -44,12 +44,12 @@ public class cashier_transactions_archive extends AppCompatActivity {
                         String address = u.getString(6) + ", " + u.getString(14);
                         patientTxt.setText(patientName);
                         addressTxt.setText(address);
-                        int msp = u.getInt(15);
-                        if(msp == 0 ){
+                        String msp = u.getString(15);
+                        if(msp == ""||msp.isEmpty() ){
                             mspTxt.setText("n/a");
                         }
                         else {
-                            mspTxt.setText(Integer.toString(msp));
+                            mspTxt.setText(msp);
                         }
                     }
                 }
