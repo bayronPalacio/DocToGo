@@ -55,52 +55,47 @@ public class MainActivity extends AppCompatActivity {
 
                 //can find match?
                 Cursor user = dbh.loginUser(username,password);
-                if(user.getCount() == 1)
-                {
+                if(user.getCount() == 1) {
 
                     user.moveToFirst();
 
                     //check if deactivated
-                    if(user.getInt(2) == 1)
-                    {
+                    if (user.getInt(2) == 1) {
                         //if true, Toast + cancel
-                        Toast.makeText(getBaseContext(),"Account deactivated. Cannot log in.",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Account deactivated. Cannot log in.", Toast.LENGTH_LONG).show();
                         return;
                     }
                     //Save user id to preferences
-                    SharedPreferences storage = getApplicationContext().getSharedPreferences("DOCTOGOSESSION",MODE_PRIVATE);
+                    SharedPreferences storage = getApplicationContext().getSharedPreferences("DOCTOGOSESSION", MODE_PRIVATE);
                     SharedPreferences.Editor memoryMaster = storage.edit();
-                    memoryMaster.putInt("USERID",user.getInt(0));
-                    memoryMaster.putString("USERNAME",username);
-                    memoryMaster.putInt("USERROLE",user.getInt(1));
+                    memoryMaster.putInt("USERID", user.getInt(0));
+                    memoryMaster.putString("USERNAME", username);
+                    memoryMaster.putInt("USERROLE", user.getInt(1));
                     memoryMaster.commit();
 
                     //Start new activity, based on cursor role
                     int targetRole = user.getInt(1);
-                    switch(targetRole)
-                    {
-                        case 1:
-                            startActivity(new Intent(MainActivity.this, admin_main.class));
-                            break;
-                        case 2:
-                            if(user.getInt(3)==1)
-                            {
-                                Intent i = new Intent(MainActivity.this, register.class);
-                                i.putExtra("register", 1);
-                                startActivity(i);
-                            }
-                            else {
+                    if (user.getInt(3) == 1) {
+                        Intent i = new Intent(MainActivity.this, register.class);
+                        i.putExtra("register", 1);
+                        startActivity(i);
+                    } else {
+                        switch (targetRole) {
+                            case 1:
+                                startActivity(new Intent(MainActivity.this, admin_main.class));
+                                break;
+                            case 2:
                                 startActivity(new Intent(MainActivity.this, patient_main.class));
-                            }
-                            break;
-                        case 3:
-                            startActivity(new Intent(MainActivity.this, doctor_main.class));
-                            break;
-                        case 4:
-                            startActivity(new Intent(MainActivity.this, cashier_main.class));
-                            break;
-                        default:
-                            break;
+                                break;
+                            case 3:
+                                startActivity(new Intent(MainActivity.this, doctor_main.class));
+                                break;
+                            case 4:
+                                startActivity(new Intent(MainActivity.this, cashier_main.class));
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
                 else if (user.getCount() > 1)
