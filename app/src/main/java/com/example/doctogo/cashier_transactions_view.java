@@ -74,7 +74,7 @@ public class cashier_transactions_view extends AppCompatActivity implements Date
                         String patientName = u.getString(4) + " " + u.getString(5);
                         patientTxt.setText(patientName);
                         String msp = u.getString(15);
-                        if(msp == ""||msp.isEmpty()){
+                        if(msp == ""){
                             mspTxt.setText("n/a");
                         }
                         else {

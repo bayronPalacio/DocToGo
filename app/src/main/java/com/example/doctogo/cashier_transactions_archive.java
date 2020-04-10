@@ -45,7 +45,7 @@ public class cashier_transactions_archive extends AppCompatActivity {
                         patientTxt.setText(patientName);
                         addressTxt.setText(address);
                         String msp = u.getString(15);
-                        if(msp == ""||msp.isEmpty() ){
+                        if(msp == ""){
                             mspTxt.setText("n/a");
                         }
                         else {

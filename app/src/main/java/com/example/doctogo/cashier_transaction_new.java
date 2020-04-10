@@ -73,7 +73,7 @@ public class cashier_transaction_new extends AppCompatActivity implements DatePi
                     String MSP = u.getString(15);
                     patientTxt.setText(patientName);
                     addressTxt.setText(address);
-                    if(MSP == "" ||MSP.isEmpty() ) {
+                    if(MSP == "") {
                         MSPTxt.setText("n/a");
                     }
                     else{

@@ -405,7 +405,7 @@ class DatabaseHelper extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues cv = new ContentValues();
             cv.put(T1COL_7, address.trim());
-            cv.put(T1COL_9, city.trim());
+            cv.put(T1COL_15, city);
             cv.put(T1COL_8, email);
             cv.put(T1COL_9, phone);
             cv.put(T1COL_11, weight);

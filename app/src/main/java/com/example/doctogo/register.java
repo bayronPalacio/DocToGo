@@ -115,7 +115,7 @@ public class register extends AppCompatActivity
                 String city = ETCity.getText().toString();
                 String strAge = (ETAge.getText().toString());
                 String strWeight = (ETWeight.getText().toString());
-                String strMSP = (ETMSP.getText().toString());
+                String strMSP = ""+(ETMSP.getText().toString());
                 int weight = 0;
                 if(!strWeight.isEmpty())
                 {weight = Integer.parseInt(strWeight);}

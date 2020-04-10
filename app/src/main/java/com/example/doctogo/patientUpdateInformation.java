@@ -52,7 +52,7 @@ public class patientUpdateInformation extends AppCompatActivity {
                 updatePhone.setText(getInformation.getString(8));
                 updateWeight.setText(getInformation.getString(10));
                 String x = getInformation.getString(15);
-                if(getInformation.getString(15) == ""||getInformation.getString(15).isEmpty()){
+                if((""+getInformation.getString(15)) == ""){
                     updateMSP.setText("");
                 }else {
                     updateMSP.setText(getInformation.getString(15));
